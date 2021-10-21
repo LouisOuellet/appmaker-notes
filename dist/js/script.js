@@ -24,9 +24,9 @@ API.Plugins.notes = {
 				},function(result) {
 					var dataset = JSON.parse(result);
 					if(dataset.success != undefined){
-						for(const [key, value] of Object.entries(dataset.output.results)){ API.Helper.set(API.Contents,['data','dom','notes',value.id],value); }
+						for(const [key, value] of Object.entries(dataset.output.dom)){ API.Helper.set(API.Contents,['data','dom','notes',value.id],value); }
 						for(const [key, value] of Object.entries(dataset.output.raw)){ API.Helper.set(API.Contents,['data','raw','notes',value.id],value); }
-						API.Builder.table(card.children('.card-body'), dataset.output.results, {
+						API.Builder.table(card.children('.card-body'), dataset.output.dom, {
 							headers:dataset.output.headers,
 							id:'NotesIndex',
 							modal:true,
@@ -52,7 +52,7 @@ API.Plugins.notes = {
 					API.request('notes','read',{data:{id:id,key:'name'}},function(result){
 						var dataset = JSON.parse(result);
 						if(dataset.success != undefined){
-							API.GUI.insert(dataset.output.results);
+							API.GUI.insert(dataset.output.dom);
 						}
 					});
 				}
@@ -79,9 +79,9 @@ API.Plugins.notes = {
 								},function(result){
 									var dataset = JSON.parse(result), html = '', etoast = false;
 									if(typeof dataset.success !== 'undefined'){
-										for(const [key, value] of Object.entries(dataset.output.results)){ API.Helper.set(API.Contents,['data','dom','notes',value.id],value); }
+										for(const [key, value] of Object.entries(dataset.output.dom)){ API.Helper.set(API.Contents,['data','dom','notes',value.id],value); }
 										for(const [key, value] of Object.entries(dataset.output.raw)){ API.Helper.set(API.Contents,['data','raw','notes',value.id],value); }
-										API.Builder.table(tab, dataset.output.results, {
+										API.Builder.table(tab, dataset.output.dom, {
 											headers:dataset.output.headers,
 											id:'ClientsNotes',
 											modal:true,
