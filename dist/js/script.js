@@ -84,7 +84,7 @@ API.Plugins.notes = {
 						html += '<div data-plugin="notes" data-id="'+dataset.id+'" data-date="'+dateItem.getTime()+'">';
 							html += '<i class="fas fa-'+defaults.icon+' bg-'+defaults.color+'"></i>';
 							html += '<div class="timeline-item">';
-								html += '<span class="time bg-'+defaults.color+'"><i class="fas fa-clock mr-2"></i><time class="timeago" datetime="'+dataset.created.replace(/ /g, "T")+'">'+dataset.created+'</time></span>';
+								html += '<span class="time text-dark"><i class="fas fa-clock mr-2"></i><time class="timeago" datetime="'+dataset.created.replace(/ /g, "T")+'">'+dataset.created+'</time></span>';
 								html += '<h3 class="timeline-header border-0 bg-'+defaults.color+'"><a class="mr-2">'+user+'</a>'+subject+'</h3>';
 								html += '<div class="timeline-body">'+dataset.content+'</div>';
 							html += '</div>';
@@ -98,7 +98,7 @@ API.Plugins.notes = {
 						});
 						layout.timeline.append(items);
 						if(API.Auth.validate('plugin', 'notes', 4)){
-							$('<a class="time bg-warning pointer"><i class="fas fa-trash-alt"></i></a>').insertAfter(element.find('span.time.bg-warning'));
+							$('<a class="time text-dark pointer"><i class="fas fa-trash-alt"></i></a>').insertAfter(element.find('span.time.bg-warning'));
 							element.find('a.pointer').off().click(function(){
 								API.CRUD.delete.show({ keys:dataset,key:'id', modal:true, plugin:'notes' },function(note){
 									element.remove();
