@@ -111,6 +111,92 @@ API.Plugins.notes = {
 			}
 		},
 	},
+	Layouts:{
+		details:{
+			tab:function(data,layout,options = {},callback = null){
+				if(options instanceof Function){ callback = options; options = {}; }
+				var defaults = {field: "name"};
+				if(API.Helper.isSet(options,['field'])){ defaults.field = options.field; }
+				API.GUI.Layouts.details.tab(data,layout,{icon:"fas fa-sticky-note",text:API.Contents.Language["Notes"]},function(data,layout,tab,content){
+					layout.timeline.find('.time-label').first().find('div.btn-group').append('<button class="btn btn-secondary" data-trigger="notes">'+API.Contents.Language['Notes']+'</button>');
+					layout.content.notes = content;
+					layout.tabs.notes = tab;
+					if(API.Auth.validate('custom', 'b3_notes', 2)){
+						content.append('<div><textarea title="Note" name="note" class="form-control"></textarea></div>');
+						content.find('textarea').summernote({
+							toolbar: [
+								['font', ['fontname', 'fontsize']],
+								['style', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+								['color', ['color']],
+								['paragraph', ['style', 'ul', 'ol', 'paragraph', 'height']],
+							],
+							height: 250,
+						});
+						var html = '';
+						html += '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">';
+							html += '<form class="form-inline my-2 my-lg-0 ml-auto">';
+								html += '<button class="btn btn-warning my-2 my-sm-0" type="button" data-action="reply"><i class="fas fa-sticky-note mr-1"></i>'+API.Contents.Language['Add Note']+'</button>';
+							html += '</form>';
+						html += '</nav>';
+						content.append(html);
+					}
+				});
+				API.Plugins.notes.Layouts.details.Events(data,layout);
+				if(callback != null){ callback(dataset,layout); }
+			},
+			GUI:{},
+			Events:function(dataset,layout,options = {},callback = null){
+				var url = new URL(window.location.href);
+				if(options instanceof Function){ callback = options; options = {}; }
+				var defaults = {field: "name"};
+				if(API.Helper.isSet(options,['field'])){ defaults.field = options.field; }
+				if(API.Auth.validate('plugin', 'notes', 2)){
+					layout.content.notes.find('button').off().click(function(){
+					  if(!layout.content.notes.find('textarea').summernote('isEmpty')){
+					    var note = {
+					      by:API.Contents.Auth.User.id,
+					      content:layout.content.notes.find('textarea').summernote('code'),
+					      relationship:url.searchParams.get("p"),
+					      link_to:dataset.this.dom.id,
+					      status:dataset.this.raw.status,
+					    };
+					    layout.content.notes.find('textarea').val('');
+					    layout.content.notes.find('textarea').summernote('code','');
+					    layout.content.notes.find('textarea').summernote('destroy');
+					    layout.content.notes.find('textarea').summernote({
+					      toolbar: [
+					        ['font', ['fontname', 'fontsize']],
+					        ['style', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+					        ['color', ['color']],
+					        ['paragraph', ['style', 'ul', 'ol', 'paragraph', 'height']],
+					      ],
+					      height: 250,
+					    });
+					    API.request(url.searchParams.get("p"),'note',{data:note},function(result){
+					      var data = JSON.parse(result);
+					      if(data.success != undefined){
+									API.Plugins.notes.Timeline.object(data.output.note.dom,layout);
+					      }
+					    });
+					    layout.tabs.find('a').first().tab('show');
+					  } else {
+					    layout.content.notes.find('textarea').summernote('destroy');
+					    layout.content.notes.find('textarea').summernote({
+					      toolbar: [
+					        ['font', ['fontname', 'fontsize']],
+					        ['style', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+					        ['color', ['color']],
+					        ['paragraph', ['style', 'ul', 'ol', 'paragraph', 'height']],
+					      ],
+					      height: 250,
+					    });
+					    alert(API.Contents.Language['Note is empty']);
+					  }
+					});
+				}
+			},
+		},
+	},
 }
 
 API.Plugins.notes.init();
