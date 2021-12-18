@@ -81,7 +81,7 @@ API.Plugins.notes = {
 						if((typeof dataset.subject !== 'undefined')&&(dataset.subject != null)&&(dataset.subject != "")) { var subject = dataset.subject; }
 						else if((typeof dataset.title !== 'undefined')&&(dataset.title != null)&&(dataset.title != "")) { var subject = dataset.title; }
 						else { var subject = ''; }
-						html += '<div data-type="'+icon+'" data-id="'+dataset.id+'" data-date="'+dateItem.getTime()+'">';
+						html += '<div data-plugin="notes" data-id="'+dataset.id+'" data-date="'+dateItem.getTime()+'">';
 							html += '<i class="fas fa-'+icon+' bg-'+color+'"></i>';
 							html += '<div class="timeline-item">';
 								html += '<span class="time bg-'+color+'"><i class="fas fa-clock mr-2"></i><time class="timeago" datetime="'+dataset.created.replace(/ /g, "T")+'">'+dataset.created+'</time></span>';
