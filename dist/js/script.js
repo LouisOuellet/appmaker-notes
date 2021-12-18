@@ -82,15 +82,15 @@ API.Plugins.notes = {
 						else if((typeof dataset.title !== 'undefined')&&(dataset.title != null)&&(dataset.title != "")) { var subject = dataset.title; }
 						else { var subject = ''; }
 						html += '<div data-plugin="notes" data-id="'+dataset.id+'" data-date="'+dateItem.getTime()+'">';
-							html += '<i class="fas fa-'+icon+' bg-'+color+'"></i>';
+							html += '<i class="fas fa-'+defaults.icon+' bg-'+defaults.color+'"></i>';
 							html += '<div class="timeline-item">';
-								html += '<span class="time bg-'+color+'"><i class="fas fa-clock mr-2"></i><time class="timeago" datetime="'+dataset.created.replace(/ /g, "T")+'">'+dataset.created+'</time></span>';
-								html += '<h3 class="timeline-header bg-'+color+'"><a class="mr-2">'+user+'</a>'+subject+'</h3>';
+								html += '<span class="time bg-'+defaults.color+'"><i class="fas fa-clock mr-2"></i><time class="timeago" datetime="'+dataset.created.replace(/ /g, "T")+'">'+dataset.created+'</time></span>';
+								html += '<h3 class="timeline-header bg-'+defaults.color+'"><a class="mr-2">'+user+'</a>'+subject+'</h3>';
 								html += '<div class="timeline-body">'+dataset.content+'</div>';
 							html += '</div>';
 						html += '</div>';
 						layout.timeline.find('div.time-label[data-dateus="'+dateUS+'"]').after(html);
-						var element = layout.timeline.find('[data-type="'+icon+'"][data-id="'+dataset.id+'"]');
+						var element = layout.timeline.find('[data-plugin][data-id="'+dataset.id+'"]');
 						element.find('time').timeago();
 						var items = layout.timeline.children('div').detach().get();
 						items.sort(function(a, b){
