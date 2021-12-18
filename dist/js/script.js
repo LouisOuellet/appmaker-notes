@@ -98,7 +98,7 @@ API.Plugins.notes = {
 						});
 						layout.timeline.append(items);
 						if(API.Auth.validate('plugin', 'notes', 4)){
-							$('<a class="time text-dark pointer"><i class="fas fa-trash-alt"></i></a>').insertAfter(element.find('span.time.bg-warning'));
+							$('<a class="time text-dark pointer"><i class="fas fa-trash-alt"></i></a>').insertAfter(element.find('span.time'));
 							element.find('a.pointer').off().click(function(){
 								API.CRUD.delete.show({ keys:dataset,key:'id', modal:true, plugin:'notes' },function(note){
 									element.remove();
