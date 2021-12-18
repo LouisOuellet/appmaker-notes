@@ -60,10 +60,10 @@ API.Plugins.notes = {
 		},
 	},
 	Timeline:{
-		icon:"history",
+		icon:"sticky-note",
 		object:function(dataset,layout,options = {},callback = null){
 			if(options instanceof Function){ callback = options; options = {}; }
-			var defaults = {icon: API.Plugins.notes.Timeline.icon,color: "primary"};
+			var defaults = {icon: API.Plugins.notes.Timeline.icon,color: "warning"};
 			if(API.Helper.isSet(options,['icon'])){ defaults.icon = options.icon; }
 			if(API.Helper.isSet(options,['color'])){ defaults.color = options.color; }
 			if(typeof dataset.id !== 'undefined'){
@@ -85,7 +85,7 @@ API.Plugins.notes = {
 							html += '<i class="fas fa-'+defaults.icon+' bg-'+defaults.color+'"></i>';
 							html += '<div class="timeline-item">';
 								html += '<span class="time bg-'+defaults.color+'"><i class="fas fa-clock mr-2"></i><time class="timeago" datetime="'+dataset.created.replace(/ /g, "T")+'">'+dataset.created+'</time></span>';
-								html += '<h3 class="timeline-header bg-'+defaults.color+'"><a class="mr-2">'+user+'</a>'+subject+'</h3>';
+								html += '<h3 class="timeline-header border-0 bg-'+defaults.color+'"><a class="mr-2">'+user+'</a>'+subject+'</h3>';
 								html += '<div class="timeline-body">'+dataset.content+'</div>';
 							html += '</div>';
 						html += '</div>';
