@@ -73,7 +73,7 @@ API.Plugins.notes = {
 				var checkExist = setInterval(function() {
 					if(layout.timeline.find('div.time-label[data-dateus="'+dateUS+'"]').length > 0){
 						clearInterval(checkExist);
-						if(layout.timeline.lenght > 0 && layout.timeline.find('.time-label').first().find('div.btn-group').find('button[data-trigger="notes"]').length <= 0){
+						if(API.Helper.isSet(layout,['timeline']) && layout.timeline.find('.time-label').first().find('div.btn-group').find('button[data-trigger="notes"]').length <= 0){
 							layout.timeline.find('.time-label').first().find('div.btn-group').append('<button class="btn btn-secondary" data-trigger="notes">'+API.Contents.Language['Notes']+'</button>');
 						}
 						var html = '';
@@ -121,7 +121,7 @@ API.Plugins.notes = {
 				var defaults = {field: "name"};
 				if(API.Helper.isSet(options,['field'])){ defaults.field = options.field; }
 				API.GUI.Layouts.details.tab(data,layout,{icon:"fas fa-sticky-note",text:API.Contents.Language["Notes"]},function(data,layout,tab,content){
-					if(layout.timeline.lenght > 0 && layout.timeline.find('.time-label').first().find('div.btn-group').find('button[data-trigger="notes"]').length <= 0){
+					if(API.Helper.isSet(layout,['timeline']) && layout.timeline.find('.time-label').first().find('div.btn-group').find('button[data-trigger="notes"]').length <= 0){
 						layout.timeline.find('.time-label').first().find('div.btn-group').append('<button class="btn btn-secondary" data-trigger="notes">'+API.Contents.Language['Notes']+'</button>');
 					}
 					layout.content.notes = content;
