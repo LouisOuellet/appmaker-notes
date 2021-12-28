@@ -119,7 +119,7 @@ API.Plugins.notes = {
 				var defaults = {field: "name"};
 				if(API.Helper.isSet(options,['field'])){ defaults.field = options.field; }
 				API.GUI.Layouts.details.tab(data,layout,{icon:"fas fa-sticky-note",text:API.Contents.Language["Notes"]},function(data,layout,tab,content){
-					API.Builder.Timeline.add.filter(layout,'notes','notes');
+					API.Builder.Timeline.add.filter(layout,'notes','Notes');
 					layout.content.notes = content;
 					layout.tabs.notes = tab;
 					if(API.Auth.validate('custom', 'b3_notes', 2)){
