@@ -64,8 +64,7 @@ API.Plugins.notes = {
 		object:function(dataset,layout,options = {},callback = null){
 			if(options instanceof Function){ callback = options; options = {}; }
 			var defaults = {icon: API.Plugins.notes.Timeline.icon,color: "warning"};
-			if(API.Helper.isSet(options,['icon'])){ defaults.icon = options.icon; }
-			if(API.Helper.isSet(options,['color'])){ defaults.color = options.color; }
+			for(var [key, option] of Object.entries(options)){ if(API.Helper.isSet(defaults,[key])){ defaults[key] = option; } }
 			if(typeof dataset.id !== 'undefined'){
 				var dateItem = new Date(dataset.created);
 				var dateUS = dateItem.toLocaleDateString('en-US', {day: 'numeric', month: 'short', year: 'numeric'}).replace(/ /g, '-').replace(/,/g, '');
@@ -117,7 +116,7 @@ API.Plugins.notes = {
 			tab:function(data,layout,options = {},callback = null){
 				if(options instanceof Function){ callback = options; options = {}; }
 				var defaults = {field: "name"};
-				if(API.Helper.isSet(options,['field'])){ defaults.field = options.field; }
+				for(var [key, option] of Object.entries(options)){ if(API.Helper.isSet(defaults,[key])){ defaults[key] = option; } }
 				API.GUI.Layouts.details.tab(data,layout,{icon:"fas fa-sticky-note",text:API.Contents.Language["Notes"]},function(data,layout,tab,content){
 					API.Builder.Timeline.add.filter(layout,'notes','Notes');
 					layout.content.notes = content;
@@ -150,7 +149,7 @@ API.Plugins.notes = {
 				var url = new URL(window.location.href);
 				if(options instanceof Function){ callback = options; options = {}; }
 				var defaults = {field: "name"};
-				if(API.Helper.isSet(options,['field'])){ defaults.field = options.field; }
+				for(var [key, option] of Object.entries(options)){ if(API.Helper.isSet(defaults,[key])){ defaults[key] = option; } }
 				if(API.Auth.validate('plugin', 'notes', 2)){
 					layout.content.notes.find('button').off().click(function(){
 					  if(!layout.content.notes.find('textarea').summernote('isEmpty')){
