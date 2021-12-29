@@ -121,7 +121,7 @@ API.Plugins.notes = {
 					API.Builder.Timeline.add.filter(layout,'notes','Notes');
 					layout.content.notes = content;
 					layout.tabs.notes = tab;
-					if(API.Auth.validate('custom', 'b3_notes', 2)){
+					if(API.Auth.validate('plugin', 'notes', 2)){
 						content.append('<div><textarea title="Note" name="note" class="form-control"></textarea></div>');
 						content.find('textarea').summernote({
 							toolbar: [
