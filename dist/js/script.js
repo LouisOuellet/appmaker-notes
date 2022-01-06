@@ -117,30 +117,32 @@ API.Plugins.notes = {
 				if(options instanceof Function){ callback = options; options = {}; }
 				var defaults = {field: "name"};
 				for(var [key, option] of Object.entries(options)){ if(API.Helper.isSet(defaults,[key])){ defaults[key] = option; } }
-				API.GUI.Layouts.details.tab(data,layout,{icon:"fas fa-sticky-note",text:API.Contents.Language["Notes"]},function(data,layout,tab,content){
-					API.Builder.Timeline.add.filter(layout,'notes','Notes');
-					layout.content.notes = content;
-					layout.tabs.notes = tab;
-					if(API.Auth.validate('plugin', 'notes', 2)){
-						content.append('<div><textarea title="Note" name="note" class="form-control"></textarea></div>');
-						content.find('textarea').summernote({
-							toolbar: [
-								['font', ['fontname', 'fontsize']],
-								['style', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
-								['color', ['color']],
-								['paragraph', ['style', 'ul', 'ol', 'paragraph', 'height']],
-							],
-							height: 250,
-						});
-						var html = '';
-						html += '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">';
-							html += '<form class="form-inline my-2 my-lg-0 ml-auto">';
-								html += '<button class="btn btn-warning my-2 my-sm-0" type="button" data-action="reply"><i class="fas fa-sticky-note mr-1"></i>'+API.Contents.Language['Add Note']+'</button>';
-							html += '</form>';
-						html += '</nav>';
-						content.append(html);
-					}
-				});
+				if(!API.Helper.isSet(layout,['content','notes'])){
+					API.GUI.Layouts.details.tab(data,layout,{icon:"fas fa-sticky-note",text:API.Contents.Language["Notes"]},function(data,layout,tab,content){
+						API.Builder.Timeline.add.filter(layout,'notes','Notes');
+						layout.content.notes = content;
+						layout.tabs.notes = tab;
+						if(API.Auth.validate('plugin', 'notes', 2)){
+							layout.content.notes.append('<div><textarea title="Note" name="note" class="form-control"></textarea></div>');
+							layout.content.notes.find('textarea').summernote({
+								toolbar: [
+									['font', ['fontname', 'fontsize']],
+									['style', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+									['color', ['color']],
+									['paragraph', ['style', 'ul', 'ol', 'paragraph', 'height']],
+								],
+								height: 250,
+							});
+							var html = '';
+							html += '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">';
+								html += '<form class="form-inline my-2 my-lg-0 ml-auto">';
+									html += '<button class="btn btn-warning my-2 my-sm-0" type="button" data-action="reply"><i class="fas fa-sticky-note mr-1"></i>'+API.Contents.Language['Add Note']+'</button>';
+								html += '</form>';
+							html += '</nav>';
+							layout.content.notes.append(html);
+						}
+					});
+				}
 				API.Plugins.notes.Layouts.details.Events(data,layout);
 				if(callback != null){ callback(dataset,layout); }
 			},
